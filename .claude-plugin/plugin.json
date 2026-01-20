@@ -1,0 +1,24 @@
+{
+  "name": "gemmology",
+  "version": "1.0.0",
+  "description": "Comprehensive coloured gemstone expertise for gemmologists and students, covering identification, properties, grading, treatments, origin determination, and crystal structure visualization with SVG/STL/glTF export. Based on FGA curriculum standards.",
+  "author": {
+    "name": "Fabian Schuh",
+    "email": "fabian@gemmology.dev"
+  },
+  "keywords": [
+    "gemmology",
+    "gemstones",
+    "coloured stones",
+    "gem identification",
+    "FGA",
+    "grading",
+    "treatments",
+    "inclusions",
+    "crystal visualization",
+    "CDL",
+    "crystallography"
+  ],
+  "repository": "https://github.com/gemmology-dev/gemmology-plugin",
+  "homepage": "https://gemmology.dev"
+}
