@@ -56,7 +56,7 @@ svg = generate_crystal_svg("cubic[m3m]:{111}@1.0 + {100}@1.3")
 
 # Generate from preset
 ruby = get_preset("ruby")
-svg = generate_crystal_svg(ruby.cdl, info_panel=True)
+svg = generate_crystal_svg(ruby['cdl'], info_properties={'name': ruby['name']})
 ```
 
 ## Claude Code Plugin
