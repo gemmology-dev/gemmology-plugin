@@ -18,13 +18,9 @@ class TestImports:
     def test_import_cdl_parser(self):
         """Test cdl-parser re-exports."""
         from gemmology_plugin import (
+            CRYSTAL_SYSTEMS,
             parse_cdl,
             validate_cdl,
-            CrystalDescription,
-            CrystalForm,
-            MillerIndex,
-            CRYSTAL_SYSTEMS,
-            POINT_GROUPS,
         )
         assert callable(parse_cdl)
         assert callable(validate_cdl)
@@ -35,7 +31,6 @@ class TestImports:
         """Test crystal-geometry re-exports."""
         from gemmology_plugin import (
             cdl_to_geometry,
-            CrystalGeometry,
             halfspace_intersection_3d,
         )
         assert callable(cdl_to_geometry)
@@ -45,9 +40,8 @@ class TestImports:
         """Test mineral-database re-exports."""
         from gemmology_plugin import (
             get_preset,
-            search_presets,
-            Mineral,
             list_categories,
+            search_presets,
         )
         assert callable(get_preset)
         assert callable(search_presets)
@@ -58,8 +52,8 @@ class TestImports:
         from gemmology_plugin import (
             generate_cdl_svg,
             generate_geometry_svg,
-            geometry_to_stl,
             geometry_to_gltf,
+            geometry_to_stl,
         )
         assert callable(generate_cdl_svg)
         assert callable(generate_geometry_svg)
@@ -80,10 +74,8 @@ class TestConvenienceFunctions:
 
     def test_generate_preset_svg(self):
         """Test generate_preset_svg with valid preset."""
-        from gemmology_plugin import generate_preset_svg
-
         # Skip if diamond preset not available
-        from gemmology_plugin import get_preset
+        from gemmology_plugin import generate_preset_svg, get_preset
         if get_preset("diamond") is None:
             pytest.skip("Diamond preset not available")
 
@@ -103,7 +95,7 @@ class TestEndToEnd:
 
     def test_cdl_to_svg_pipeline(self):
         """Test full CDL to SVG pipeline."""
-        from gemmology_plugin import parse_cdl, cdl_to_geometry, generate_crystal_svg
+        from gemmology_plugin import cdl_to_geometry, generate_crystal_svg, parse_cdl
 
         # Parse CDL
         desc = parse_cdl("cubic[m3m]:{111}@1.0 + {100}@1.3")
@@ -120,7 +112,7 @@ class TestEndToEnd:
 
     def test_preset_to_stl_pipeline(self):
         """Test preset to STL pipeline."""
-        from gemmology_plugin import get_preset, cdl_to_geometry, geometry_to_stl, parse_cdl
+        from gemmology_plugin import cdl_to_geometry, geometry_to_stl, get_preset, parse_cdl
 
         # Get preset
         preset = get_preset("diamond")
@@ -145,7 +137,7 @@ class TestCLI:
 
     def test_cli_import(self):
         """Test CLI module imports."""
-        from gemmology_plugin.cli import main, crystal_svg, create_argument_parser
+        from gemmology_plugin.cli import create_argument_parser, crystal_svg, main
         assert callable(main)
         assert callable(crystal_svg)
         assert callable(create_argument_parser)

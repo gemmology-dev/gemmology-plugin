@@ -7,7 +7,6 @@ wrapping functionality from the component packages.
 
 import argparse
 import sys
-from typing import Optional
 
 
 def create_argument_parser() -> argparse.ArgumentParser:
@@ -143,12 +142,12 @@ def crystal_svg() -> None:
 
 def _handle_svg_command(args: argparse.Namespace) -> None:
     """Handle the crystal-svg command."""
-    from crystal_renderer import generate_cdl_svg, geometry_to_stl, geometry_to_gltf
     from crystal_geometry import cdl_to_geometry
+    from crystal_renderer import generate_cdl_svg, geometry_to_gltf, geometry_to_stl
     from mineral_database import get_preset
 
     # Determine CDL string
-    cdl: Optional[str] = None
+    cdl: str | None = None
     preset_info = None
 
     if args.cdl:
@@ -209,7 +208,7 @@ def _handle_svg_command(args: argparse.Namespace) -> None:
 
 def _handle_list_command(args: argparse.Namespace) -> None:
     """Handle the list-presets command."""
-    from mineral_database import search_presets, list_categories
+    from mineral_database import list_categories, search_presets
 
     if args.search:
         presets = search_presets(args.search)
