@@ -25,36 +25,35 @@ __email__ = "fabian@gemmology.dev"
 
 # Re-export core functionality from component packages
 from cdl_parser import (
-    parse_cdl,
-    validate_cdl,
+    CRYSTAL_SYSTEMS,
+    NAMED_FORMS,
+    POINT_GROUPS,
+    TWIN_LAWS,
     CrystalDescription,
     CrystalForm,
     MillerIndex,
     Modification,
-    CRYSTAL_SYSTEMS,
-    POINT_GROUPS,
-    TWIN_LAWS,
-    NAMED_FORMS,
+    parse_cdl,
+    validate_cdl,
 )
-
 from crystal_geometry import (
-    cdl_to_geometry,
     CrystalGeometry,
+    cdl_to_geometry,
     halfspace_intersection_3d,
 )
-
-from mineral_database import (
-    get_preset,
-    search_presets,
-    Mineral,
-    list_preset_categories as list_categories,
-)
-
 from crystal_renderer import (
     generate_cdl_svg,
     generate_geometry_svg,
-    geometry_to_stl,
     geometry_to_gltf,
+    geometry_to_stl,
+)
+from mineral_database import (
+    Mineral,
+    get_preset,
+    search_presets,
+)
+from mineral_database import (
+    list_preset_categories as list_categories,
 )
 
 __all__ = [
@@ -119,8 +118,8 @@ def generate_crystal_svg(
         >>> with open("crystal.svg", "w") as f:
         ...     f.write(svg)
     """
-    import tempfile
     import os
+    import tempfile
 
     with tempfile.NamedTemporaryFile(suffix=".svg", delete=False) as f:
         output_path = f.name
@@ -135,7 +134,7 @@ def generate_crystal_svg(
             show_grid=show_grid,
             info_properties=info_properties,
         )
-        with open(output_path, 'r') as f:
+        with open(output_path) as f:
             return f.read()
     finally:
         if os.path.exists(output_path):
