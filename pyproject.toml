@@ -1,6 +1,6 @@
 [project]
 name = "gemmology-plugin"
-version = "1.0.1"
+version = "1.0.2"
 description = "Claude Code plugin for coloured gemstone expertise and crystal visualization"
 readme = "README.md"
 license = { text = "MIT" }
