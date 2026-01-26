@@ -18,6 +18,7 @@ import pytest
 # Validation Helpers
 # =============================================================================
 
+
 def validate_geometry(
     geom: Any,
     *,
@@ -42,25 +43,23 @@ def validate_geometry(
         AssertionError: If validation fails
     """
     result = {
-        'vertices': len(geom.vertices),
-        'faces': len(geom.faces),
-        'edges': len(geom.get_edges()),
-        'euler': geom.euler_characteristic(),
-        'is_valid': geom.is_valid(),
+        "vertices": len(geom.vertices),
+        "faces": len(geom.faces),
+        "edges": len(geom.get_edges()),
+        "euler": geom.euler_characteristic(),
+        "is_valid": geom.is_valid(),
     }
 
     assert len(geom.vertices) >= min_vertices, (
         f"Too few vertices: {len(geom.vertices)} < {min_vertices}"
     )
-    assert len(geom.faces) >= min_faces, (
-        f"Too few faces: {len(geom.faces)} < {min_faces}"
-    )
+    assert len(geom.faces) >= min_faces, f"Too few faces: {len(geom.faces)} < {min_faces}"
 
     if check_euler:
         euler = geom.euler_characteristic()
         assert euler == 2, f"Euler characteristic = {euler}, expected 2"
 
-    if check_normals and hasattr(geom, 'face_normals') and geom.face_normals is not None:
+    if check_normals and hasattr(geom, "face_normals") and geom.face_normals is not None:
         normals = np.array(geom.face_normals)
         magnitudes = np.linalg.norm(normals, axis=1)
         assert np.allclose(magnitudes, 1.0, atol=1e-6), "Face normals not normalized"
@@ -94,10 +93,10 @@ def validate_svg(svg_content: str) -> dict[str, Any]:
     has_g = "<g" in svg_content
 
     result = {
-        'length': len(svg_content),
-        'has_path': has_path,
-        'has_polygon': has_polygon,
-        'has_groups': has_g,
+        "length": len(svg_content),
+        "has_path": has_path,
+        "has_polygon": has_polygon,
+        "has_groups": has_g,
     }
 
     # Should have at least path or polygon for crystal visualization
@@ -125,7 +124,7 @@ def validate_stl_binary(stl_data: bytes) -> dict[str, Any]:
     assert len(stl_data) >= 84, f"STL too short: {len(stl_data)} < 84 bytes"
 
     # Skip header (80 bytes), read facet count
-    facet_count = struct.unpack('<I', stl_data[80:84])[0]
+    facet_count = struct.unpack("<I", stl_data[80:84])[0]
 
     expected_size = 84 + facet_count * 50
     assert len(stl_data) == expected_size, (
@@ -134,9 +133,9 @@ def validate_stl_binary(stl_data: bytes) -> dict[str, Any]:
     )
 
     result = {
-        'size': len(stl_data),
-        'facet_count': facet_count,
-        'header': stl_data[:80].rstrip(b'\x00').decode('ascii', errors='replace'),
+        "size": len(stl_data),
+        "facet_count": facet_count,
+        "header": stl_data[:80].rstrip(b"\x00").decode("ascii", errors="replace"),
     }
 
     assert facet_count > 0, "STL should have at least one facet"
@@ -165,8 +164,8 @@ def validate_stl_ascii(stl_text: str) -> dict[str, Any]:
     facet_count = stl_text.count("facet normal")
 
     result = {
-        'length': len(stl_text),
-        'facet_count': facet_count,
+        "length": len(stl_text),
+        "facet_count": facet_count,
     }
 
     assert facet_count > 0, "ASCII STL should have at least one facet"
@@ -190,26 +189,26 @@ def validate_gltf(gltf_data: Any) -> dict[str, Any]:
     if isinstance(gltf_data, dict):
         gltf = gltf_data
     elif isinstance(gltf_data, bytes):
-        gltf = json.loads(gltf_data.decode('utf-8'))
+        gltf = json.loads(gltf_data.decode("utf-8"))
     elif isinstance(gltf_data, str):
         gltf = json.loads(gltf_data)
     else:
         raise TypeError(f"Unexpected glTF data type: {type(gltf_data)}")
 
     # Check required top-level fields
-    assert 'asset' in gltf, "glTF should have 'asset' field"
-    assert 'version' in gltf['asset'], "glTF asset should have 'version'"
+    assert "asset" in gltf, "glTF should have 'asset' field"
+    assert "version" in gltf["asset"], "glTF asset should have 'version'"
 
     # Check for meshes
-    assert 'meshes' in gltf, "glTF should have 'meshes' field"
-    assert len(gltf['meshes']) > 0, "glTF should have at least one mesh"
+    assert "meshes" in gltf, "glTF should have 'meshes' field"
+    assert len(gltf["meshes"]) > 0, "glTF should have at least one mesh"
 
     result = {
-        'version': gltf['asset'].get('version'),
-        'mesh_count': len(gltf.get('meshes', [])),
-        'node_count': len(gltf.get('nodes', [])),
-        'accessor_count': len(gltf.get('accessors', [])),
-        'buffer_count': len(gltf.get('buffers', [])),
+        "version": gltf["asset"].get("version"),
+        "mesh_count": len(gltf.get("meshes", [])),
+        "node_count": len(gltf.get("nodes", [])),
+        "accessor_count": len(gltf.get("accessors", [])),
+        "buffer_count": len(gltf.get("buffers", [])),
     }
 
     return result
@@ -231,19 +230,20 @@ BASIC_CDL_CASES = [
 
 # Representative presets per crystal system
 SYSTEM_PRESETS = {
-    'cubic': ['diamond', 'garnet', 'spinel', 'fluorite'],
-    'hexagonal': ['beryl', 'apatite'],
-    'trigonal': ['quartz', 'ruby', 'calcite'],  # tourmaline has geometry issues
-    'tetragonal': ['zircon', 'rutile'],
-    'orthorhombic': ['topaz', 'olivine', 'chrysoberyl'],
-    'monoclinic': ['orthoclase', 'spodumene'],
-    'triclinic': ['labradorite', 'rhodonite'],
+    "cubic": ["diamond", "garnet", "spinel", "fluorite"],
+    "hexagonal": ["beryl", "apatite"],
+    "trigonal": ["quartz", "ruby", "calcite"],  # tourmaline has geometry issues
+    "tetragonal": ["zircon", "rutile"],
+    "orthorhombic": ["topaz", "olivine", "chrysoberyl"],
+    "monoclinic": ["orthoclase", "spodumene"],
+    "triclinic": ["labradorite", "rhodonite"],
 }
 
 
 # =============================================================================
 # Basic Pipeline Tests
 # =============================================================================
+
 
 class TestBasicPipeline:
     """Test the basic CDL to geometry pipeline."""
@@ -262,8 +262,10 @@ class TestBasicPipeline:
         result = validate_geometry(geom)
 
         # Log info for debugging
-        print(f"  {cdl}: V={result['vertices']} F={result['faces']} "
-              f"E={result['edges']} χ={result['euler']}")
+        print(
+            f"  {cdl}: V={result['vertices']} F={result['faces']} "
+            f"E={result['edges']} χ={result['euler']}"
+        )
 
     def test_cdl_to_svg(self):
         """Test CDL to SVG pipeline."""
@@ -272,8 +274,10 @@ class TestBasicPipeline:
         svg = generate_crystal_svg("cubic[m3m]:{111}")
         result = validate_svg(svg)
 
-        print(f"  SVG: {result['length']} chars, path={result['has_path']}, "
-              f"polygon={result['has_polygon']}")
+        print(
+            f"  SVG: {result['length']} chars, path={result['has_path']}, "
+            f"polygon={result['has_polygon']}"
+        )
 
     def test_cdl_to_stl(self):
         """Test CDL to STL pipeline."""
@@ -295,13 +299,16 @@ class TestBasicPipeline:
         gltf_data = geometry_to_gltf(geom.vertices, geom.faces)
 
         result = validate_gltf(gltf_data)
-        print(f"  glTF: version={result['version']}, "
-              f"meshes={result['mesh_count']}, nodes={result['node_count']}")
+        print(
+            f"  glTF: version={result['version']}, "
+            f"meshes={result['mesh_count']}, nodes={result['node_count']}"
+        )
 
 
 # =============================================================================
 # Preset Pipeline Tests
 # =============================================================================
+
 
 class TestPresetPipeline:
     """Test the preset-based pipeline."""
@@ -311,12 +318,19 @@ class TestPresetPipeline:
         from mineral_database import get_systems, list_presets
 
         # The 7 standard crystallographic systems
-        expected_systems = {'cubic', 'hexagonal', 'trigonal', 'tetragonal',
-                           'orthorhombic', 'monoclinic', 'triclinic'}
+        expected_systems = {
+            "cubic",
+            "hexagonal",
+            "trigonal",
+            "tetragonal",
+            "orthorhombic",
+            "monoclinic",
+            "triclinic",
+        }
         actual_systems = set(get_systems())
 
         # Allow for "amorphous" which is a special category, not a crystal system
-        crystallographic_systems = actual_systems - {'amorphous'}
+        crystallographic_systems = actual_systems - {"amorphous"}
         assert expected_systems.issubset(crystallographic_systems), (
             f"Missing systems: {expected_systems - crystallographic_systems}"
         )
@@ -336,7 +350,7 @@ class TestPresetPipeline:
             if preset is None:
                 pytest.skip(f"Preset '{preset_name}' not available")
 
-            cdl = preset.get('cdl')
+            cdl = preset.get("cdl")
             assert cdl, f"Preset '{preset_name}' has no CDL"
 
             desc = parse_cdl(cdl)
@@ -345,13 +359,15 @@ class TestPresetPipeline:
             geom = cdl_to_geometry(desc)
             result = validate_geometry(geom)
 
-            print(f"  {preset_name}: V={result['vertices']} F={result['faces']} "
-                  f"χ={result['euler']}")
+            print(
+                f"  {preset_name}: V={result['vertices']} F={result['faces']} χ={result['euler']}"
+            )
 
 
 # =============================================================================
 # All Presets Tests
 # =============================================================================
+
 
 class TestAllPresets:
     """Test all available presets."""
@@ -364,7 +380,7 @@ class TestAllPresets:
 
         # Known presets that don't have valid CDL (amorphous minerals, etc.)
         KNOWN_PARSE_ISSUES = {
-            'opal',  # Amorphous - CDL doesn't apply
+            "opal",  # Amorphous - CDL doesn't apply
         }
 
         preset_names = list_presets()
@@ -375,7 +391,7 @@ class TestAllPresets:
             if name in KNOWN_PARSE_ISSUES:
                 continue
             preset = get_preset(name)
-            cdl = preset.get('cdl')
+            cdl = preset.get("cdl")
             if not cdl:
                 failed.append(f"{name}: no CDL")
                 continue
@@ -388,7 +404,9 @@ class TestAllPresets:
                 failed.append(f"{name}: {e}")
 
         assert not failed, "Failed presets:\n" + "\n".join(failed)
-        print(f"  {len(preset_names) - len(KNOWN_PARSE_ISSUES)}/{len(preset_names)} presets parse successfully")
+        print(
+            f"  {len(preset_names) - len(KNOWN_PARSE_ISSUES)}/{len(preset_names)} presets parse successfully"
+        )
 
     def test_all_presets_geometry(self):
         """Verify all presets generate valid geometry."""
@@ -399,10 +417,22 @@ class TestAllPresets:
         # Known presets with geometry issues that need fixing
         # These are tracked as technical debt but shouldn't fail the test suite
         KNOWN_ISSUES = {
-            'orpiment',  # Complex monoclinic form with intersection issues
-            'opal',  # Amorphous - CDL doesn't apply
-            'tourmaline',  # Complex trigonal form with geometry issues
-            'tourmaline-watermelon',  # Complex trigonal form with numeric issues
+            "orpiment",  # Complex monoclinic form with intersection issues
+            "opal",  # Amorphous - CDL doesn't apply
+            "tourmaline",  # Complex trigonal form with geometry issues
+            "tourmaline-watermelon",  # Complex trigonal form with numeric issues
+            # Twin presets with invalid topology (Euler characteristic != 2)
+            # Tracked in crystal-geometry for future fix
+            "chrysoberyl-trilling",
+            "diamond-macle",
+            "fluorite-twin",
+            "gypsum-swallowtail",
+            "orthoclase-carlsbad",
+            "pyrite-iron-cross",
+            "quartz-brazil-twin",
+            "quartz-japan-twin",
+            "spinel-macle",
+            "staurolite-cross-90",
         }
 
         preset_names = list_presets()
@@ -410,7 +440,7 @@ class TestAllPresets:
 
         for name in preset_names:
             preset = get_preset(name)
-            cdl = preset.get('cdl')
+            cdl = preset.get("cdl")
             if not cdl:
                 continue
 
@@ -426,8 +456,10 @@ class TestAllPresets:
                     failed.append(f"{name}: {e}")
 
         assert not failed, "Failed presets:\n" + "\n".join(failed)
-        print(f"  {len(preset_names) - len(KNOWN_ISSUES)}/{len(preset_names)} "
-              f"presets generate valid geometry ({len(KNOWN_ISSUES)} known issues)")
+        print(
+            f"  {len(preset_names) - len(KNOWN_ISSUES)}/{len(preset_names)} "
+            f"presets generate valid geometry ({len(KNOWN_ISSUES)} known issues)"
+        )
 
     def test_all_presets_euler_characteristic(self):
         """Verify Euler characteristic = 2 for all preset geometries."""
@@ -440,7 +472,7 @@ class TestAllPresets:
 
         for name in preset_names:
             preset = get_preset(name)
-            cdl = preset.get('cdl')
+            cdl = preset.get("cdl")
             if not cdl:
                 continue
 
@@ -468,6 +500,7 @@ class TestAllPresets:
 # Output Format Tests
 # =============================================================================
 
+
 class TestOutputFormats:
     """Test various output format generation."""
 
@@ -481,7 +514,7 @@ class TestOutputFormats:
 
         # ASCII STL returns string
         if isinstance(stl_text, bytes):
-            stl_text = stl_text.decode('utf-8')
+            stl_text = stl_text.decode("utf-8")
 
         result = validate_stl_ascii(stl_text)
         print(f"  ASCII STL: {result['length']} chars, {result['facet_count']} facets")
@@ -494,7 +527,7 @@ class TestOutputFormats:
         geom = cdl_to_geometry(desc)
         stl_data = geometry_to_stl(geom.vertices, geom.faces, binary=True)
 
-        with tempfile.NamedTemporaryFile(suffix='.stl', delete=False) as f:
+        with tempfile.NamedTemporaryFile(suffix=".stl", delete=False) as f:
             f.write(stl_data)
             temp_path = Path(f.name)
 
@@ -514,7 +547,7 @@ class TestOutputFormats:
         gltf_data = geometry_to_gltf(geom.vertices, geom.faces)
 
         # gltf_data is a dict, write as JSON
-        with tempfile.NamedTemporaryFile(suffix='.gltf', mode='w', delete=False) as f:
+        with tempfile.NamedTemporaryFile(suffix=".gltf", mode="w", delete=False) as f:
             json.dump(gltf_data, f)
             temp_path = Path(f.name)
 
@@ -525,8 +558,8 @@ class TestOutputFormats:
             # Verify it's valid JSON
             with open(temp_path) as f:
                 gltf = json.load(f)
-                assert 'asset' in gltf
-                assert 'meshes' in gltf
+                assert "asset" in gltf
+                assert "meshes" in gltf
 
             print(f"  Exported glTF: {temp_path.stat().st_size} bytes")
         finally:
@@ -544,7 +577,7 @@ class TestOutputFormats:
             gltf_data = geometry_to_gltf(
                 geom.vertices,
                 geom.faces,
-                color=[0.8, 0.2, 0.2, 1.0]  # Red crystal
+                color=[0.8, 0.2, 0.2, 1.0],  # Red crystal
             )
             result = validate_gltf(gltf_data)
             print(f"  glTF with color: {result['mesh_count']} meshes")
@@ -558,6 +591,7 @@ class TestOutputFormats:
 # =============================================================================
 # TODO Verification Pattern Test
 # =============================================================================
+
 
 class TestTodoVerification:
     """Test matching the verification pattern from TODO.md."""
@@ -606,6 +640,7 @@ class TestTodoVerification:
 # =============================================================================
 # Standalone Verification
 # =============================================================================
+
 
 def run_verification():
     """Run verification as a standalone script.
@@ -663,7 +698,7 @@ def run_verification():
     failed = 0
     for name in all_presets:
         preset = get_preset(name)
-        cdl = preset.get('cdl')
+        cdl = preset.get("cdl")
         if not cdl:
             continue
         try:

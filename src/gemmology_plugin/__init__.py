@@ -172,7 +172,7 @@ def generate_preset_svg(
         raise ValueError(f"Unknown preset: {preset_name}")
 
     # Get CDL string from preset dict
-    cdl = preset.get('cdl')
+    cdl = preset.get("cdl")
     if not cdl:
         raise ValueError(f"Preset '{preset_name}' has no CDL definition")
 
@@ -180,12 +180,12 @@ def generate_preset_svg(
     info_props = None
     if info_panel:
         info_props = {
-            'name': preset.get('name', preset_name),
-            'chemistry': preset.get('chemistry'),
-            'system': preset.get('system'),
-            'hardness': preset.get('hardness'),
-            'ri': preset.get('ri'),
-            'sg': preset.get('sg'),
+            "name": preset.get("name", preset_name),
+            "chemistry": preset.get("chemistry"),
+            "system": preset.get("system"),
+            "hardness": preset.get("hardness"),
+            "ri": preset.get("ri"),
+            "sg": preset.get("sg"),
         }
         # Remove None values
         info_props = {k: v for k, v in info_props.items() if v is not None}

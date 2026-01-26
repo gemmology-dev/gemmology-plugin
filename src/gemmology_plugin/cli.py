@@ -78,7 +78,8 @@ def _add_svg_arguments(parser: argparse.ArgumentParser) -> None:
     )
 
     parser.add_argument(
-        "-o", "--output",
+        "-o",
+        "--output",
         help="Output file path (default: stdout)",
     )
     parser.add_argument(
@@ -273,6 +274,7 @@ def main() -> None:
         _handle_info_command(args)
     elif args.command == "version":
         from gemmology_plugin import __version__
+
         print(f"gemmology-plugin {__version__}")
     else:
         parser.print_help()

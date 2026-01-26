@@ -13,6 +13,7 @@ class TestImports:
     def test_import_version(self):
         """Test version import."""
         from gemmology_plugin import __version__
+
         assert __version__ == "1.0.0"
 
     def test_import_cdl_parser(self):
@@ -22,10 +23,11 @@ class TestImports:
             parse_cdl,
             validate_cdl,
         )
+
         assert callable(parse_cdl)
         assert callable(validate_cdl)
         assert len(CRYSTAL_SYSTEMS) == 7
-        assert 'cubic' in CRYSTAL_SYSTEMS
+        assert "cubic" in CRYSTAL_SYSTEMS
 
     def test_import_crystal_geometry(self):
         """Test crystal-geometry re-exports."""
@@ -33,6 +35,7 @@ class TestImports:
             cdl_to_geometry,
             halfspace_intersection_3d,
         )
+
         assert callable(cdl_to_geometry)
         assert callable(halfspace_intersection_3d)
 
@@ -43,6 +46,7 @@ class TestImports:
             list_categories,
             search_presets,
         )
+
         assert callable(get_preset)
         assert callable(search_presets)
         assert callable(list_categories)
@@ -55,6 +59,7 @@ class TestImports:
             geometry_to_gltf,
             geometry_to_stl,
         )
+
         assert callable(generate_cdl_svg)
         assert callable(generate_geometry_svg)
         assert callable(geometry_to_stl)
@@ -76,6 +81,7 @@ class TestConvenienceFunctions:
         """Test generate_preset_svg with valid preset."""
         # Skip if diamond preset not available
         from gemmology_plugin import generate_preset_svg, get_preset
+
         if get_preset("diamond") is None:
             pytest.skip("Diamond preset not available")
 
@@ -120,7 +126,7 @@ class TestEndToEnd:
             pytest.skip("Diamond preset not available")
 
         # Parse CDL from preset dict
-        cdl = preset.get('cdl')
+        cdl = preset.get("cdl")
         desc = parse_cdl(cdl)
         geom = cdl_to_geometry(desc)
 
@@ -138,6 +144,7 @@ class TestCLI:
     def test_cli_import(self):
         """Test CLI module imports."""
         from gemmology_plugin.cli import create_argument_parser, crystal_svg, main
+
         assert callable(main)
         assert callable(crystal_svg)
         assert callable(create_argument_parser)
