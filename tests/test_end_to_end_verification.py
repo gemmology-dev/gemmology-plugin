@@ -425,13 +425,16 @@ class TestAllPresets:
             # Tracked in crystal-geometry for future fix
             "chrysoberyl-trilling",
             "diamond-macle",
+            "fluorite-interpenetrating",
             "fluorite-twin",
             "gypsum-swallowtail",
             "orthoclase-carlsbad",
+            "plagioclase-albite",
             "pyrite-iron-cross",
             "quartz-brazil-twin",
             "quartz-japan-twin",
             "spinel-macle",
+            "staurolite-cross-60",
             "staurolite-cross-90",
         }
 

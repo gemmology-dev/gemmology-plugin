@@ -31,7 +31,7 @@ classifiers = [
 dependencies = [
     "gemmology-cdl-parser>=1.0.0",
     "gemmology-mineral-database>=1.0.0",
-    "gemmology-crystal-geometry>=1.0.0",
+    "gemmology-crystal-geometry>=1.0.3",
     "gemmology-crystal-renderer>=1.0.0",
 ]
 
