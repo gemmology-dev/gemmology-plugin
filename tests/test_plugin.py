@@ -159,3 +159,106 @@ class TestCLI:
         # Test parsing known arguments
         args = parser.parse_args(["version"])
         assert args.command == "version"
+
+    def test_argument_parser_svg_command(self):
+        """Test argument parser for crystal-svg command."""
+        from gemmology_plugin.cli import create_argument_parser
+
+        parser = create_argument_parser()
+        args = parser.parse_args(["crystal-svg", "--cdl", "cubic[m3m]:{111}"])
+        assert args.command == "crystal-svg"
+        assert args.cdl == "cubic[m3m]:{111}"
+
+    def test_argument_parser_svg_with_preset(self):
+        """Test argument parser for crystal-svg with preset."""
+        from gemmology_plugin.cli import create_argument_parser
+
+        parser = create_argument_parser()
+        args = parser.parse_args(["svg", "--preset", "diamond"])
+        assert args.command == "svg"
+        assert args.preset == "diamond"
+
+    def test_argument_parser_list_command(self):
+        """Test argument parser for list command."""
+        from gemmology_plugin.cli import create_argument_parser
+
+        parser = create_argument_parser()
+        args = parser.parse_args(["list"])
+        assert args.command == "list"
+
+    def test_argument_parser_list_with_category(self):
+        """Test argument parser for list with category."""
+        from gemmology_plugin.cli import create_argument_parser
+
+        parser = create_argument_parser()
+        args = parser.parse_args(["list-presets", "--category", "cubic"])
+        assert args.command == "list-presets"
+        assert args.category == "cubic"
+
+    def test_argument_parser_list_with_search(self):
+        """Test argument parser for list with search."""
+        from gemmology_plugin.cli import create_argument_parser
+
+        parser = create_argument_parser()
+        args = parser.parse_args(["list", "--search", "diamond"])
+        assert args.command == "list"
+        assert args.search == "diamond"
+
+    def test_argument_parser_info_command(self):
+        """Test argument parser for info command."""
+        from gemmology_plugin.cli import create_argument_parser
+
+        parser = create_argument_parser()
+        args = parser.parse_args(["info", "diamond"])
+        assert args.command == "info"
+        assert args.preset == "diamond"
+
+    def test_add_svg_arguments(self):
+        """Test SVG argument helper function."""
+        import argparse
+
+        from gemmology_plugin.cli import _add_svg_arguments
+
+        parser = argparse.ArgumentParser()
+        _add_svg_arguments(parser)
+
+        args = parser.parse_args(["--cdl", "cubic[m3m]:{111}"])
+        assert args.cdl == "cubic[m3m]:{111}"
+        assert args.format == "svg"  # default
+        assert args.width == 600  # default
+        assert args.height == 600  # default
+
+    def test_add_svg_arguments_with_options(self):
+        """Test SVG arguments with custom options."""
+        import argparse
+
+        from gemmology_plugin.cli import _add_svg_arguments
+
+        parser = argparse.ArgumentParser()
+        _add_svg_arguments(parser)
+
+        args = parser.parse_args(
+            [
+                "--cdl",
+                "cubic[m3m]:{111}",
+                "--format",
+                "stl",
+                "--width",
+                "800",
+                "--height",
+                "600",
+                "--elev",
+                "45",
+                "--azim",
+                "-30",
+                "--no-axes",
+                "--no-grid",
+            ]
+        )
+        assert args.format == "stl"
+        assert args.width == 800
+        assert args.height == 600
+        assert args.elev == 45.0
+        assert args.azim == -30.0
+        assert args.no_axes is True
+        assert args.no_grid is True
