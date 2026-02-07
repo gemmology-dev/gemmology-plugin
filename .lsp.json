@@ -1,0 +1,9 @@
+{
+  "cdl": {
+    "command": "cdl-lsp",
+    "args": [],
+    "extensionToLanguage": {
+      ".cdl": "cdl"
+    }
+  }
+}

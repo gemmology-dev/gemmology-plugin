@@ -143,13 +143,17 @@ def crystal_svg() -> None:
 
 def _handle_svg_command(args: argparse.Namespace) -> None:
     """Handle the crystal-svg command."""
+    import os
+    import tempfile
+
+    from cdl_parser import parse_cdl
     from crystal_geometry import cdl_to_geometry
     from crystal_renderer import generate_cdl_svg, geometry_to_gltf, geometry_to_stl
     from mineral_database import get_preset
 
     # Determine CDL string
     cdl: str | None = None
-    preset_info = None
+    info_properties = None
 
     if args.cdl:
         cdl = args.cdl
@@ -158,8 +162,19 @@ def _handle_svg_command(args: argparse.Namespace) -> None:
         if preset is None:
             print(f"Error: Unknown preset '{args.preset}'", file=sys.stderr)
             sys.exit(1)
-        cdl = preset.cdl
-        preset_info = preset
+        cdl = preset["cdl"]
+        # Build info properties from preset if FGA info panel requested
+        if args.info_fga:
+            info_properties = {
+                "name": preset.get("name"),
+                "chemistry": preset.get("chemistry"),
+                "system": preset.get("system"),
+                "hardness": preset.get("hardness"),
+                "ri": preset.get("ri"),
+                "sg": preset.get("sg"),
+            }
+            # Remove None values
+            info_properties = {k: v for k, v in info_properties.items() if v is not None}
     elif args.twin:
         # For twins, construct the CDL with twin modifier
         cdl = f"cubic[m3m]:octahedron|twin({args.twin})"
@@ -170,23 +185,60 @@ def _handle_svg_command(args: argparse.Namespace) -> None:
 
     try:
         if args.format == "svg":
-            output = generate_cdl_svg(
-                cdl,
-                width=args.width,
-                height=args.height,
-                elevation=args.elev,
-                azimuth=args.azim,
-                show_axes=not args.no_axes,
-                show_grid=not args.no_grid,
-                info_panel=args.info_fga,
-                preset_info=preset_info,
-            )
-        elif args.format in ("stl", "gltf"):
-            geom = cdl_to_geometry(cdl)
-            if args.format == "stl":
-                output = geometry_to_stl(geom, binary=True)
+            # generate_cdl_svg writes to file and returns Path
+            # Use temp file if output not specified
+            if args.output:
+                output_path = args.output
             else:
-                output = geometry_to_gltf(geom)
+                fd, output_path = tempfile.mkstemp(suffix=".svg")
+                os.close(fd)
+
+            # Convert pixel dimensions to figsize in inches (at 100 dpi)
+            figsize = (args.width / 100, args.height / 100)
+
+            generate_cdl_svg(
+                cdl,
+                output_path,
+                show_axes=not args.no_axes,
+                elev=args.elev,
+                azim=args.azim,
+                show_grid=not args.no_grid,
+                info_properties=info_properties,
+                figsize=figsize,
+            )
+
+            if args.output:
+                print(f"Written to {args.output}")
+            else:
+                # Read and print temp file, then clean up
+                with open(output_path) as f:
+                    print(f.read())
+                os.unlink(output_path)
+
+        elif args.format in ("stl", "gltf"):
+            import json
+
+            desc = parse_cdl(cdl)
+            geom = cdl_to_geometry(desc)
+            if args.format == "stl":
+                output = geometry_to_stl(geom.vertices, geom.faces, binary=True)
+                is_binary = True
+            else:
+                gltf_dict = geometry_to_gltf(geom.vertices, geom.faces)
+                output = json.dumps(gltf_dict, indent=2)
+                is_binary = False
+
+            # Output binary/text data
+            if args.output:
+                mode = "wb" if is_binary else "w"
+                with open(args.output, mode) as f:
+                    f.write(output)
+                print(f"Written to {args.output}")
+            else:
+                if is_binary:
+                    sys.stdout.buffer.write(output)
+                else:
+                    print(output)
         else:
             print(f"Error: Unsupported format '{args.format}'", file=sys.stderr)
             sys.exit(1)
@@ -194,44 +246,35 @@ def _handle_svg_command(args: argparse.Namespace) -> None:
         print(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
 
-    # Output
-    if args.output:
-        mode = "wb" if isinstance(output, bytes) else "w"
-        with open(args.output, mode) as f:
-            f.write(output)
-        print(f"Written to {args.output}")
-    else:
-        if isinstance(output, bytes):
-            sys.stdout.buffer.write(output)
-        else:
-            print(output)
-
 
 def _handle_list_command(args: argparse.Namespace) -> None:
     """Handle the list-presets command."""
-    from mineral_database import list_categories, search_presets
+    from mineral_database import get_preset, list_preset_categories, list_presets, search_presets
 
     if args.search:
-        presets = search_presets(args.search)
+        preset_names = search_presets(args.search)
     elif args.category:
-        presets = search_presets(category=args.category)
+        preset_names = list_presets(args.category)
     else:
         # List all categories and counts
-        categories = list_categories()
+        categories = list_preset_categories()
         print("Available categories:")
         for cat in sorted(categories):
-            presets_in_cat = search_presets(category=cat)
+            presets_in_cat = list_presets(cat)
             print(f"  {cat}: {len(presets_in_cat)} presets")
         return
 
-    if not presets:
+    if not preset_names:
         print("No presets found.")
         return
 
-    print(f"Found {len(presets)} presets:")
-    for preset in sorted(presets, key=lambda p: p.name):
-        system = preset.system or "unknown"
-        print(f"  {preset.name:20} ({system})")
+    print(f"Found {len(preset_names)} presets:")
+    for name in sorted(preset_names):
+        preset = get_preset(name)
+        if preset:
+            system = preset.get("system", "unknown")
+            display_name = preset.get("name", name)
+            print(f"  {display_name:20} ({system})")
 
 
 def _handle_info_command(args: argparse.Namespace) -> None:
@@ -243,22 +286,22 @@ def _handle_info_command(args: argparse.Namespace) -> None:
         print(f"Error: Unknown preset '{args.preset}'", file=sys.stderr)
         sys.exit(1)
 
-    print(f"Name: {preset.name}")
-    print(f"CDL: {preset.cdl}")
-    if preset.system:
-        print(f"Crystal System: {preset.system}")
-    if preset.chemistry:
-        print(f"Chemistry: {preset.chemistry}")
-    if preset.hardness:
-        print(f"Hardness: {preset.hardness}")
-    if preset.sg:
-        print(f"Specific Gravity: {preset.sg}")
-    if preset.ri:
-        print(f"Refractive Index: {preset.ri}")
-    if preset.birefringence:
-        print(f"Birefringence: {preset.birefringence}")
-    if preset.optic_sign:
-        print(f"Optic Sign: {preset.optic_sign}")
+    print(f"Name: {preset.get('name')}")
+    print(f"CDL: {preset.get('cdl')}")
+    if preset.get("system"):
+        print(f"Crystal System: {preset.get('system')}")
+    if preset.get("chemistry"):
+        print(f"Chemistry: {preset.get('chemistry')}")
+    if preset.get("hardness"):
+        print(f"Hardness: {preset.get('hardness')}")
+    if preset.get("sg"):
+        print(f"Specific Gravity: {preset.get('sg')}")
+    if preset.get("ri"):
+        print(f"Refractive Index: {preset.get('ri')}")
+    if preset.get("birefringence"):
+        print(f"Birefringence: {preset.get('birefringence')}")
+    if preset.get("optical_character"):
+        print(f"Optical Character: {preset.get('optical_character')}")
 
 
 def main() -> None:
