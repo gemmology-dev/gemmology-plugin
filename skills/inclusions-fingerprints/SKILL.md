@@ -243,6 +243,35 @@ Fine needle-like inclusions, often rutile in corundum.
 | Platinum platelets | Flame-fusion |
 | Too clean | Suspect all types |
 
+**Database integration:** Each synthetic preset in the mineral database includes a `diagnostic_synthetic_features` field listing the key inclusion/growth indicators for that specific growth method. Query with `get_preset("<synthetic-id>")` or `mineral-db --info <id>` to retrieve the feature list.
+
+### CVD and HPHT Diamond Inclusions
+
+Lab-grown diamonds produced by Chemical Vapour Deposition (CVD) and High Pressure High Temperature (HPHT) methods have characteristic internal features:
+
+**HPHT Diamonds:**
+| Feature | Description |
+|---------|-------------|
+| Metallic flux inclusions | Iron, nickel, or cobalt alloy remnants from solvent/catalyst |
+| Colour zoning | Sector-dependent (cuboctahedral growth sectors) |
+| Graining | Internal strain patterns |
+| Phosphorescence | Some HPHT diamonds phosphoresce (blue/green) |
+| Magnetic response | Metallic inclusions may make stone weakly magnetic |
+
+**CVD Diamonds:**
+| Feature | Description |
+|---------|-------------|
+| Strain patterns | Banded birefringence under cross-polarised light |
+| Point inclusions | Small dark or metallic points (non-diamond carbon) |
+| Growth striations | Fine parallel lines from layered deposition |
+| Brown tint | Some as-grown CVD stones show brownish hue (removable by HPHT treatment) |
+| Inscriptions | Many have laser-inscribed girdle identification |
+
+**Detection notes:**
+- Standard gemmological testing (RI, SG, thermal) cannot distinguish lab-grown from natural diamond -- both are carbon with identical properties.
+- Advanced techniques required: DiamondView (fluorescence imaging), photoluminescence spectroscopy, FTIR.
+- The `diagnostic_synthetic_features` field in the database lists method-specific indicators for CVD and HPHT presets.
+
 ## Microscopy Techniques
 
 ### Lighting Methods

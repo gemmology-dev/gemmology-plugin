@@ -19,7 +19,7 @@ Example:
     '1.762-1.770'
 """
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 __author__ = "Fabian Schuh"
 __email__ = "fabian@gemmology.dev"
 
@@ -49,7 +49,13 @@ from crystal_renderer import (
 )
 from mineral_database import (
     Mineral,
+    MineralFamily,
+    get_counterparts,
+    get_family,
     get_preset,
+    list_by_origin,
+    list_simulants,
+    list_synthetics,
     search_presets,
 )
 from mineral_database import (
@@ -78,7 +84,13 @@ __all__ = [
     "get_preset",
     "search_presets",
     "Mineral",
+    "MineralFamily",
     "list_categories",
+    "list_synthetics",
+    "list_simulants",
+    "get_counterparts",
+    "list_by_origin",
+    "get_family",
     # Crystal Renderer
     "generate_cdl_svg",
     "generate_geometry_svg",

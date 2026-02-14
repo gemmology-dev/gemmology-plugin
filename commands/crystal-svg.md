@@ -124,6 +124,28 @@ system[point_group]:{hkl}@distance + {hkl}@distance
 - **Tetragonal**: zircon, rutile
 - **Monoclinic**: kunzite, malachite, jadeite
 
+### Synthetic and Simulant Presets
+
+Synthetic and simulant presets are also available:
+
+```bash
+# Synthetic presets
+gemmology crystal-svg --preset synthetic-ruby-verneuil -o /tmp/synth-ruby.svg
+gemmology crystal-svg --preset synthetic-emerald-flux -o /tmp/synth-emerald.svg
+
+# Simulant presets
+gemmology crystal-svg --preset cubic-zirconia -o /tmp/cz.svg
+gemmology crystal-svg --preset moissanite -o /tmp/moissanite.svg
+
+# List all synthetics or simulants
+gemmology list-presets --origin synthetic
+gemmology list-presets --origin simulant
+```
+
+**Note:** Some synthetic presets (e.g., flame fusion boules) have no CDL expression because the growth form is not a natural crystal habit. In this case, the tool will display an informational message instead of generating a visualization. Use `gemmology info <preset>` to view the preset's properties.
+
+When `--info-fga` is used with a synthetic or simulant preset, the info panel will include the origin (synthetic/simulant) and growth method (e.g., Verneuil, flux, hydrothermal) alongside the standard gemmological properties.
+
 ## Available Twin Laws
 
 spinel, japan, brazil, dauphine, carlsbad, baveno, manebach, albite, trilling, fluorite, iron_cross, staurolite_60, staurolite_90

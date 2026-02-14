@@ -11,6 +11,37 @@ description: >-
 
 Guidance on identifying synthetic (laboratory-grown) gemstones and simulants (imitations). Understanding growth methods is key to detection.
 
+## Database Integration
+
+The mineral database contains preset entries for synthetics and simulants with structured data. Use the CLI or Python API to query them:
+
+```bash
+# List all synthetics and simulants
+mineral-db --origin synthetic
+mineral-db --origin simulant
+
+# Show counterparts for a natural gem (all known synthetics/simulants)
+mineral-db --counterparts ruby
+mineral-db --counterparts diamond
+
+# Get detailed info on a specific synthetic/simulant preset
+mineral-db --info synthetic-ruby-verneuil
+mineral-db --info cubic-zirconia
+mineral-db --info luag
+mineral-db --info synthetic-paraiba
+```
+
+Python API:
+```python
+from mineral_database import list_synthetics, list_simulants, get_counterparts, list_by_origin
+
+# Query functions
+list_synthetics()                # All synthetic preset IDs
+list_simulants()                 # All simulant preset IDs
+get_counterparts("ruby")         # Synthetics + simulants for ruby
+list_by_origin("synthetic")      # All presets with origin=synthetic
+```
+
 ## Terminology
 
 | Term | Definition | Example |
@@ -33,9 +64,9 @@ Guidance on identifying synthetic (laboratory-grown) gemstones and simulants (im
 3. Creates pear-shaped "boule"
 
 **Materials produced**:
-- Synthetic ruby
-- Synthetic sapphire (all colours)
-- Synthetic spinel
+- Synthetic ruby (preset: `synthetic-ruby-verneuil`)
+- Synthetic sapphire (all colours, preset: `synthetic-sapphire-verneuil`)
+- Synthetic spinel (preset: `synthetic-spinel-verneuil`)
 - Synthetic rutile
 - Star ruby/sapphire (with additives)
 
@@ -58,10 +89,10 @@ Guidance on identifying synthetic (laboratory-grown) gemstones and simulants (im
 - Produces crystals similar to natural
 
 **Materials produced**:
-- Flux emerald (Chatham, Gilson)
-- Flux ruby (Ramaura, Chatham)
+- Flux emerald (Chatham, Gilson; preset: `synthetic-emerald-flux`)
+- Flux ruby (Ramaura, Chatham; preset: `synthetic-ruby-flux`)
 - Flux sapphire
-- Flux alexandrite
+- Flux alexandrite (preset: `synthetic-alexandrite-flux`)
 - Flux spinel
 
 **Detection features**:
@@ -83,10 +114,10 @@ Guidance on identifying synthetic (laboratory-grown) gemstones and simulants (im
 - Mimics natural geological conditions
 
 **Materials produced**:
-- Hydrothermal emerald (Biron, Regency, Tairus)
-- Hydrothermal ruby
+- Hydrothermal emerald (Biron, Regency, Tairus; preset: `synthetic-emerald-hydrothermal`)
+- Hydrothermal ruby (preset: `synthetic-ruby-hydrothermal`)
 - Hydrothermal sapphire
-- Hydrothermal quartz (amethyst, citrine)
+- Hydrothermal quartz (amethyst, citrine; preset: `synthetic-quartz-hydrothermal`)
 
 **Detection features**:
 
@@ -112,9 +143,10 @@ Guidance on identifying synthetic (laboratory-grown) gemstones and simulants (im
 - Creates cylindrical crystal
 
 **Materials produced**:
-- Synthetic alexandrite
-- YAG (Yttrium Aluminium Garnet)
-- GGG (Gadolinium Gallium Garnet)
+- Synthetic alexandrite (preset: `synthetic-alexandrite-czochralski`)
+- YAG (Yttrium Aluminium Garnet; preset: `yag`)
+- GGG (Gadolinium Gallium Garnet; preset: `ggg`)
+- LuAG (Lutetium Aluminium Garnet; preset: `luag`) -- newer simulant with higher RI than YAG
 - Some laser crystals
 
 **Detection**:
@@ -124,7 +156,7 @@ Guidance on identifying synthetic (laboratory-grown) gemstones and simulants (im
 
 ### Skull Melting
 
-**Used for**: Cubic zirconia (CZ)
+**Used for**: Cubic zirconia (CZ; preset: `cubic-zirconia`)
 - Not relevant for coloured stone imitation
 - Diamond simulant
 
@@ -253,9 +285,10 @@ Not directly relevant for coloured stones but:
 | Sapphire | Glass, synthetic sapphire, synthetic spinel |
 | Emerald | Glass, GTD, triplets, synthetic emerald |
 | Alexandrite | Synthetic colour-change sapphire/spinel |
-| Paraiba | Apatite, glass, coated topaz |
+| Paraiba | Apatite, glass, coated topaz, synthetic Paraiba tourmaline (preset: `synthetic-paraiba`) |
 | Tanzanite | Synthetic forsterite, glass, iolite |
 | Jade | Serpentine, glass, dyed quartzite |
+| Diamond | CZ (preset: `cubic-zirconia`), moissanite (preset: `moissanite`), YAG (preset: `yag`), LuAG (preset: `luag`), GGG (preset: `ggg`) |
 
 ## Testing Protocol
 

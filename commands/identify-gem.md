@@ -113,6 +113,17 @@ After each test, update the list of possible identifications:
 3. **Narrow by optical character** - SR or DR?
 4. **Narrow by pleochroism** - Expected for this species?
 5. **Confirm with spectrum/UV** - Matches expected?
+6. **Check for synthetic/simulant counterparts** - After narrowing candidates by RI and SG, query `get_counterparts()` from mineral_database to list which synthetics and simulants share those values. This helps identify look-alikes.
+
+### Could This Be Synthetic?
+
+Once a species match is established, consider whether the stone could be synthetic:
+
+1. **Examine inclusions** - Check for diagnostic synthetic features (curved striae, gas bubbles, flux veils, chevron growth, seed plates). The `diagnostic_synthetic_features` field in the mineral database lists known indicators for each synthetic type.
+2. **Growth pattern analysis** - Straight/angular = natural; curved = flame fusion; chevron = hydrothermal.
+3. **Cleanliness** - Suspiciously clean stones of a species that is typically included (e.g., emerald) warrant further investigation.
+4. **UV fluorescence** - Synthetics may fluoresce more strongly or differently than natural counterparts.
+5. **Query the database** - Use `get_counterparts("<species>")` to see all known synthetic and simulant matches, including their growth methods and diagnostic features.
 
 ## Common Separation Problems
 

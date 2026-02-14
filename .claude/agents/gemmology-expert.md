@@ -109,6 +109,61 @@ Before completing any task:
 - [ ] Pleochroism description matches optical character
 - [ ] Data follows FGA curriculum conventions
 
+## Origin Awareness (Synthetics and Simulants)
+
+The mineral database now includes synthetic and simulant presets alongside natural gems. Be aware of the `origin` field and use it proactively:
+
+### Key Principles
+
+- **When asked about a natural gem**: Proactively mention available synthetic and simulant counterparts. For example, if discussing ruby, note that flame fusion, flux, and hydrothermal synthetics exist and can be queried.
+- **When identifying an unknown stone**: Always consider both natural and synthetic matches. A stone matching ruby's RI/SG could be natural or synthetic -- check inclusions and growth features to differentiate.
+- **When adding new presets**: Set the `origin` field appropriately (`natural`, `synthetic`, or `simulant`) and populate synthetic-specific fields when applicable.
+
+### Query Functions
+
+```python
+from mineral_database import list_synthetics, list_simulants, get_counterparts, list_by_origin
+
+# List all synthetic presets
+synthetics = list_synthetics()
+
+# List all simulant presets
+simulants = list_simulants()
+
+# Get all synthetics and simulants for a given natural gem
+counterparts = get_counterparts("ruby")  # Returns synthetic rubies + ruby simulants
+
+# Filter presets by origin
+natural_only = list_by_origin("natural")
+synthetic_only = list_by_origin("synthetic")
+simulant_only = list_by_origin("simulant")
+```
+
+### Synthetic Preset Fields
+
+When working with synthetic or simulant presets, these additional fields may be present:
+
+| Field | Description | Example |
+|-------|-------------|---------|
+| `origin` | `natural`, `synthetic`, or `simulant` | `synthetic` |
+| `growth_method` | Manufacturing process | `Verneuil (flame fusion)` |
+| `natural_counterpart_id` | Preset ID of the natural equivalent | `ruby` |
+| `manufacturer` | Producer name(s) | `Chatham` |
+| `year_first_produced` | First commercial production year | `1902` |
+| `diagnostic_synthetic_features` | List of identification indicators | `["curved striae", "gas bubbles"]` |
+
+### CLI Commands
+
+```bash
+# Filter by origin
+gemmology list-presets --origin synthetic
+gemmology list-presets --origin simulant
+
+# View synthetic/simulant details
+gemmology info synthetic-ruby-verneuil
+gemmology info cubic-zirconia
+```
+
 ## Common Tasks
 
 ### Adding a New Gemstone Preset

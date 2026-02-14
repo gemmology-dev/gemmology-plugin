@@ -42,6 +42,11 @@ def create_argument_parser() -> argparse.ArgumentParser:
         "-s",
         help="Search for presets by name",
     )
+    list_parser.add_argument(
+        "--origin",
+        choices=["natural", "synthetic", "simulant"],
+        help="Filter presets by origin (natural, synthetic, simulant)",
+    )
 
     # info command
     info_parser = subparsers.add_parser(
@@ -249,12 +254,20 @@ def _handle_svg_command(args: argparse.Namespace) -> None:
 
 def _handle_list_command(args: argparse.Namespace) -> None:
     """Handle the list-presets command."""
-    from mineral_database import get_preset, list_preset_categories, list_presets, search_presets
+    from mineral_database import (
+        get_preset,
+        list_by_origin,
+        list_preset_categories,
+        list_presets,
+        search_presets,
+    )
 
     if args.search:
         preset_names = search_presets(args.search)
     elif args.category:
         preset_names = list_presets(args.category)
+    elif args.origin:
+        preset_names = list_by_origin(args.origin)
     else:
         # List all categories and counts
         categories = list_preset_categories()
@@ -274,12 +287,18 @@ def _handle_list_command(args: argparse.Namespace) -> None:
         if preset:
             system = preset.get("system", "unknown")
             display_name = preset.get("name", name)
-            print(f"  {display_name:20} ({system})")
+            origin = preset.get("origin", "natural")
+            origin_badge = ""
+            if origin == "synthetic":
+                origin_badge = " [synthetic]"
+            elif origin == "simulant":
+                origin_badge = " [simulant]"
+            print(f"  {display_name:20} ({system}){origin_badge}")
 
 
 def _handle_info_command(args: argparse.Namespace) -> None:
     """Handle the info command."""
-    from mineral_database import get_preset
+    from mineral_database import get_family, get_preset
 
     preset = get_preset(args.preset)
     if preset is None:
@@ -302,6 +321,34 @@ def _handle_info_command(args: argparse.Namespace) -> None:
         print(f"Birefringence: {preset.get('birefringence')}")
     if preset.get("optical_character"):
         print(f"Optical Character: {preset.get('optical_character')}")
+
+    # Origin and synthetic/simulant fields
+    origin = preset.get("origin")
+    if origin and origin != "natural":
+        print(f"Origin: {origin}")
+    if preset.get("growth_method"):
+        print(f"Growth Method: {preset.get('growth_method')}")
+    if preset.get("natural_counterpart_id"):
+        print(f"Natural Counterpart: {preset.get('natural_counterpart_id')}")
+    if preset.get("manufacturer"):
+        print(f"Manufacturer: {preset.get('manufacturer')}")
+    if preset.get("year_first_produced"):
+        print(f"Year First Produced: {preset.get('year_first_produced')}")
+    if preset.get("diagnostic_synthetic_features"):
+        features = preset["diagnostic_synthetic_features"]
+        if isinstance(features, list):
+            print("Diagnostic Synthetic Features:")
+            for feature in features:
+                print(f"  - {feature}")
+        else:
+            print(f"Diagnostic Synthetic Features: {features}")
+
+    # Family-level information
+    family = get_family(args.preset)
+    if family:
+        print(f"\nFamily: {family.get('name', '')}")
+        if family.get("description"):
+            print(f"Family Description: {family.get('description')}")
 
 
 def main() -> None:

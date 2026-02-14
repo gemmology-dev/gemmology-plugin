@@ -2,9 +2,12 @@
 
 Identification data for gemstone simulants.
 
+**Database integration:** All simulants with a database preset ID can be queried for full properties via `mineral-db --info <id>`. Properties shown below are for quick reference; the database is the authoritative source.
+
 ## Diamond Simulants
 
-### Cubic Zirconia (CZ)
+### Cubic Zirconia (CZ) {#cubic-zirconia}
+**Database ID:** `cubic-zirconia`
 
 | Property | Value | vs Diamond |
 |----------|-------|------------|
@@ -23,7 +26,8 @@ Identification data for gemstone simulants.
 - May show orange flash
 - Warm to touch (vs diamond cold)
 
-### Moissanite
+### Moissanite {#moissanite}
+**Database ID:** `moissanite`
 
 | Property | Value | vs Diamond |
 |----------|-------|------------|
@@ -42,7 +46,8 @@ Identification data for gemstone simulants.
 - Specific gravity lower
 - Needle-like inclusions possible
 
-### Synthetic Rutile
+### Synthetic Rutile {#synthetic-rutile}
+**Database ID:** `synthetic-rutile`
 
 | Property | Value | vs Diamond |
 |----------|-------|------------|
@@ -60,7 +65,8 @@ Identification data for gemstone simulants.
 - Yellow tint common
 - Historical simulant (1940s-50s)
 
-### YAG (Yttrium Aluminium Garnet)
+### YAG (Yttrium Aluminium Garnet) {#yag}
+**Database ID:** `yag`
 
 | Property | Value | vs Diamond |
 |----------|-------|------------|
@@ -75,6 +81,24 @@ Identification data for gemstone simulants.
 - Lower dispersion (less fire)
 - Historical simulant (1960s-70s)
 - Largely replaced by CZ
+
+### LuAG (Lutetium Aluminium Garnet) {#luag}
+**Database ID:** `luag`
+
+| Property | Value | vs Diamond |
+|----------|-------|------------|
+| Composition | Lu₃Al₅O₁₂ | C |
+| RI | 1.842 | 2.42 |
+| SG | 6.73 | 3.52 |
+| Hardness | 8-8.5 | 10 |
+| Dispersion | 0.031 | 0.044 |
+
+**Detection**:
+- Higher RI than YAG but still much lower than diamond
+- Very high SG (noticeably heavy)
+- Isotropic
+- Less common than CZ or moissanite
+- Sometimes used as coloured stone simulant
 
 ### Strontium Titanate (Fabulite)
 
@@ -91,6 +115,11 @@ Identification data for gemstone simulants.
 - Extreme dispersion
 - Historical simulant
 - Rarely seen today
+
+### GGG (Gadolinium Gallium Garnet) {#ggg}
+**Database ID:** `ggg`
+
+(Properties listed in main simulant tables above.)
 
 ### White Sapphire
 
@@ -323,12 +352,13 @@ Identification data for gemstone simulants.
 
 ### Common Confusion Pairs
 
-| Genuine | Common Simulant | Key Difference |
-|---------|-----------------|----------------|
-| Diamond | CZ | Thermal conductivity |
-| Diamond | Moissanite | Birefringence |
-| Ruby | Garnet | Optic character |
-| Ruby | Red spinel | RI, optic character |
-| Emerald | Tsavorite | RI (much higher) |
-| Sapphire | Blue spinel | RI, fluorescence |
-| Alexandrite | CC sapphire | RI, SG |
+| Genuine | Common Simulant | Key Difference | DB Query |
+|---------|-----------------|----------------|----------|
+| Diamond | CZ | Thermal conductivity | `mineral-db --info cubic-zirconia` |
+| Diamond | Moissanite | Birefringence | `mineral-db --info moissanite` |
+| Diamond | LuAG | RI, SG (very heavy) | `mineral-db --info luag` |
+| Ruby | Garnet | Optic character | |
+| Ruby | Red spinel | RI, optic character | |
+| Emerald | Tsavorite | RI (much higher) | |
+| Sapphire | Blue spinel | RI, fluorescence | |
+| Alexandrite | CC sapphire | RI, SG | |
