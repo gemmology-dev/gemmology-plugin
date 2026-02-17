@@ -20,7 +20,7 @@ Example:
 """
 
 __version__ = "1.1.0"
-__author__ = "Fabian Schuh"
+__author__ = "Bissbert"
 __email__ = "fabian@gemmology.dev"
 
 # Re-export core functionality from component packages

@@ -432,7 +432,7 @@ class TestPerformance:
   "name": "gemmology",
   "version": "1.0.0",
   "description": "Crystal visualization and gemstone expertise plugin",
-  "author": "Fabian Schuh",
+  "author": "Bissbert",
   "commands": {
     "crystal-svg": {
       "description": "Generate SVG/STL/glTF crystal visualizations",
