@@ -16,8 +16,8 @@ import pytest
 # Test Data
 # =============================================================================
 
-# Valid presets for testing
-VALID_PRESETS = ["diamond", "ruby", "emerald", "quartz"]
+# Valid presets for testing (must be full preset IDs from the database)
+VALID_PRESETS = ["diamond-octahedron", "ruby", "emerald", "quartz-prism"]
 
 # Valid CDL test cases
 VALID_CDL_CASES = [
@@ -39,7 +39,7 @@ class TestListCommand:
         """List command without args shows categories."""
         from gemmology_plugin.cli import _handle_list_command
 
-        args = argparse.Namespace(search=None, category=None)
+        args = argparse.Namespace(search=None, category=None, origin=None)
         _handle_list_command(args)
 
         captured = capsys.readouterr()
@@ -50,7 +50,7 @@ class TestListCommand:
         """List command with category shows presets in that category."""
         from gemmology_plugin.cli import _handle_list_command
 
-        args = argparse.Namespace(search=None, category="cubic")
+        args = argparse.Namespace(search=None, category="cubic", origin=None)
         _handle_list_command(args)
 
         captured = capsys.readouterr()
@@ -61,7 +61,7 @@ class TestListCommand:
         """List command with search shows matching presets."""
         from gemmology_plugin.cli import _handle_list_command
 
-        args = argparse.Namespace(search="diamond", category=None)
+        args = argparse.Namespace(search="diamond", category=None, origin=None)
         _handle_list_command(args)
 
         captured = capsys.readouterr()
@@ -72,7 +72,7 @@ class TestListCommand:
         """List command with no matches shows appropriate message."""
         from gemmology_plugin.cli import _handle_list_command
 
-        args = argparse.Namespace(search="xyznonexistent123abc", category=None)
+        args = argparse.Namespace(search="xyznonexistent123abc", category=None, origin=None)
         _handle_list_command(args)
 
         captured = capsys.readouterr()
@@ -117,7 +117,7 @@ class TestInfoCommand:
         """Info command shows crystal system for presets that have it."""
         from gemmology_plugin.cli import _handle_info_command
 
-        args = argparse.Namespace(preset="diamond")
+        args = argparse.Namespace(preset="diamond-octahedron")
         _handle_info_command(args)
 
         captured = capsys.readouterr()

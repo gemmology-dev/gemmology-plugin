@@ -346,9 +346,9 @@ def _handle_info_command(args: argparse.Namespace) -> None:
     # Family-level information
     family = get_family(args.preset)
     if family:
-        print(f"\nFamily: {family.get('name', '')}")
-        if family.get("description"):
-            print(f"Family Description: {family.get('description')}")
+        print(f"\nFamily: {family.name}")
+        if family.description:
+            print(f"Family Description: {family.description}")
 
 
 def main() -> None:
