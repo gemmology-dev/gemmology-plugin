@@ -1,13 +1,17 @@
 ---
 name: crystal-svg
-description: Generate SVG visualization of a gemstone's crystal structure, habit, twinning, cleavage, or custom CDL morphology
+description: Generate crystal structure visualization (SVG, STL, glTF, or GemCad) from presets, CDL notation, or twin laws. Default format is SVG; use --format for others.
 allowed-tools:
   - Bash
   - Read
   - Write
+  - Glob
+  - Grep
   - AskUserQuestion
 argument-hint: "<gemstone|--preset NAME|--cdl 'CDL'> [--format svg|stl|gltf] [--info-fga] [--no-grid] [-o path]"
 ---
+
+> **Note:** While named `crystal-svg` for historical reasons, this command supports multiple output formats via the `--format` flag.
 
 # Crystal Structure SVG Generator
 
@@ -156,3 +160,12 @@ After generation:
 1. Confirm the file was created successfully
 2. If no output path specified, display SVG content
 3. For macOS, offer to open: `open /path/to/output.svg`
+
+## Error Handling
+
+| Scenario | Message | Resolution |
+|----------|---------|------------|
+| Invalid CDL syntax | `Error: Invalid CDL...` | Check CDL syntax reference above |
+| Unknown preset | `Error: Unknown preset '<name>'` | Run `gemmology list-presets` |
+| Unknown twin law | `Error: Unknown twin '<name>'` | See twin laws section above |
+| Unwritable path | `Error: Permission denied` | Check directory permissions |

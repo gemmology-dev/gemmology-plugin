@@ -8,6 +8,8 @@ tools:
   - Bash
   - Glob
   - Grep
+  - AskUserQuestion
+  - WebSearch
 ---
 
 # Documentation Expert Agent

@@ -14,7 +14,7 @@ class TestImports:
         """Test version import."""
         from gemmology_plugin import __version__
 
-        assert __version__ == "1.1.0"
+        assert __version__ == "1.2.0"
 
     def test_import_cdl_parser(self):
         """Test cdl-parser re-exports."""

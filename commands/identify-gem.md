@@ -3,6 +3,7 @@ name: identify-gem
 description: Interactive workflow to systematically identify an unknown coloured gemstone using standard gemmological testing sequence
 allowed-tools:
   - Read
+  - Bash
   - AskUserQuestion
 argument-hint: "[optional: initial observations or suspected identity]"
 ---
@@ -114,6 +115,23 @@ After each test, update the list of possible identifications:
 4. **Narrow by pleochroism** - Expected for this species?
 5. **Confirm with spectrum/UV** - Matches expected?
 6. **Check for synthetic/simulant counterparts** - After narrowing candidates by RI and SG, query `get_counterparts()` from mineral_database to list which synthetics and simulants share those values. This helps identify look-alikes.
+
+## Handling Unavailable Instruments
+
+Not all users have every instrument. When unavailable:
+1. Ask which instruments the user has before starting
+2. Skip unavailable tests, noting "Not tested"
+3. Suggest alternatives (e.g., no refractometer → try SG test)
+4. Adjust confidence accordingly
+
+## Confidence Scoring
+
+| Level | Criteria |
+|-------|----------|
+| **High** | 3+ consistent independent properties matching one species |
+| **Medium** | 2 consistent properties or 3 with minor ambiguity |
+| **Low** | Visual only or 1 measured property |
+| **Inconclusive** | Test results conflict |
 
 ### Could This Be Synthetic?
 

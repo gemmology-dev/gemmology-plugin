@@ -8,6 +8,7 @@ tools:
   - WebSearch
   - Glob
   - Grep
+  - AskUserQuestion
 ---
 
 # Gemmology Expert Agent

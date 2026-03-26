@@ -201,24 +201,26 @@ def _handle_svg_command(args: argparse.Namespace) -> None:
             # Convert pixel dimensions to figsize in inches (at 100 dpi)
             figsize = (args.width / 100, args.height / 100)
 
-            generate_cdl_svg(
-                cdl,
-                output_path,
-                show_axes=not args.no_axes,
-                elev=args.elev,
-                azim=args.azim,
-                show_grid=not args.no_grid,
-                info_properties=info_properties,
-                figsize=figsize,
-            )
+            try:
+                generate_cdl_svg(
+                    cdl,
+                    output_path,
+                    show_axes=not args.no_axes,
+                    elev=args.elev,
+                    azim=args.azim,
+                    show_grid=not args.no_grid,
+                    info_properties=info_properties,
+                    figsize=figsize,
+                )
 
-            if args.output:
-                print(f"Written to {args.output}")
-            else:
-                # Read and print temp file, then clean up
-                with open(output_path) as f:
-                    print(f.read())
-                os.unlink(output_path)
+                if args.output:
+                    print(f"Written to {args.output}")
+                else:
+                    with open(output_path) as f:
+                        print(f.read())
+            finally:
+                if not args.output and os.path.exists(output_path):
+                    os.unlink(output_path)
 
         elif args.format in ("stl", "gltf"):
             import json

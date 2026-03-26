@@ -30,3 +30,18 @@ htmlcov/
 # Build artifacts
 *.db
 *.sqlite
+
+# Ruff
+.ruff_cache/
+
+# Benchmarks
+.benchmarks/
+
+# Heap snapshots
+*.heapsnapshot
+
+# macOS
+.DS_Store
+
+# Environment
+.env

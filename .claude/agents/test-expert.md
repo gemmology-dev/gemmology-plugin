@@ -8,6 +8,7 @@ tools:
   - Edit
   - Glob
   - Grep
+  - AskUserQuestion
 ---
 
 # Test Expert Agent

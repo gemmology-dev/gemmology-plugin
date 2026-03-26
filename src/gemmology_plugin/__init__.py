@@ -19,7 +19,7 @@ Example:
     '1.762-1.770'
 """
 
-__version__ = "1.1.0"
+__version__ = "1.2.0"
 __author__ = "Bissbert"
 __email__ = "fabian@gemmology.dev"
 
@@ -96,6 +96,9 @@ __all__ = [
     "generate_geometry_svg",
     "geometry_to_stl",
     "geometry_to_gltf",
+    # Convenience functions
+    "generate_crystal_svg",
+    "generate_preset_svg",
 ]
 
 
@@ -106,7 +109,7 @@ def generate_crystal_svg(
     azimuth: float = -45.0,
     show_axes: bool = True,
     show_grid: bool = True,
-    info_properties: dict = None,
+    info_properties: dict[str, str] | None = None,
 ) -> str:
     """
     Generate an SVG visualization of a crystal from CDL notation.

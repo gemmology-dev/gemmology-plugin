@@ -31,7 +31,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.10', '3.11', '3.12']
+        python-version: ['3.10', '3.11', '3.12', '3.13']
 
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -115,11 +115,11 @@ jobs:
           pip install -e .
 
       - name: Check coverage threshold
-        # Target: 60%, Current threshold: 40% (baseline - cli.py needs tests)
-        run: pytest --cov=src/gemmology_plugin --cov-report=term-missing --cov-fail-under=40
+        # Target: 60%, Current threshold: 50% (baseline - cli.py needs tests)
+        run: pytest --cov=src/gemmology_plugin --cov-report=term-missing --cov-fail-under=50
 
       - name: Coverage report
         run: |
           echo "## Coverage Report" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Current threshold: **40%** (Target: 60%)" >> $GITHUB_STEP_SUMMARY
+          echo "Current threshold: **50%** (Target: 60%)" >> $GITHUB_STEP_SUMMARY

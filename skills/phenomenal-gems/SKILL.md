@@ -274,6 +274,76 @@ Glittery, spangled effect from light reflecting off flat, plate-like inclusions 
 - Orange/brown: Hematite/goethite inclusions
 - Blue: Dumortierite inclusions (rare)
 
+## Iridescence
+
+### Mechanism
+
+Caused by thin-film interference: light waves reflect from closely spaced thin layers or surfaces, producing spectral colours when the path difference between reflected waves equals a whole number of wavelengths. The colour depends on film thickness and viewing angle.
+
+### Iridescent Gemstones
+
+| Gemstone | Cause | Colours | Notes |
+|----------|-------|---------|-------|
+| Fire agate | Thin layers of iron oxide (limonite) over chalcedony | Red, orange, green, gold, purple | Botryoidal layers; cut en cabochon to preserve layers |
+| Iris agate | Extremely fine banding in agate | Full spectrum when backlit | Requires very thin slices to see effect |
+| Ammolite | Aragonite layers in fossilised ammonite shell | Red, green, blue, gold | Graded by number of colours and brightness |
+| Rainbow obsidian | Thin magnetite nanoparticle layers | Purple, green, gold bands | Volcanic glass; requires correct orientation |
+| Iris quartz | Internal fractures (rainbow quartz) | Spectral colours from fracture planes | Often artificially enhanced by quench-crackling |
+
+### Quality Factors
+
+| Factor | Premium | Lower |
+|--------|---------|-------|
+| Colour range | Multiple vivid colours | Single muted colour |
+| Brightness | Intense, sharp flashes | Dull, faint |
+| Coverage | Full surface | Small patches |
+| Stability | Natural layers intact | Thin or fragile layers |
+
+### Ammolite Grading (AGTA Standard)
+
+- **Grade AA**: Three or more bright colours, strong chromatic shift
+- **Grade A**: Two bright colours, moderate chromatic shift
+- **Grade A-**: One to two colours, weaker shift
+- Lower grades may show dark or dull patches
+
+## Orient
+
+### Mechanism
+
+Surface iridescence seen on pearls, caused by diffraction of light by the edges of overlapping aragonite platelets in the nacre. The regularly spaced platelet layers (0.3–0.5 μm thick) act as a diffraction grating, producing subtle rainbow colours that appear to float just above the pearl surface.
+
+### Pearl Orient vs Overtone vs Lustre
+
+| Property | Cause | Appearance |
+|----------|-------|------------|
+| **Lustre** | Surface reflection | Sharp, mirror-like reflections |
+| **Overtone** | Thin-film interference within nacre | Translucent colour cast (rose, green, silver) |
+| **Orient** | Diffraction at nacre edges | Iridescent rainbow shimmer on surface |
+
+All three contribute to a pearl's beauty, but orient is the rarest and most prized. Fine orient requires:
+- Thick nacre with well-ordered aragonite platelets
+- Even platelet thickness across the surface
+- Good surface quality (smooth, unblemished)
+
+### Quality Factors
+
+| Factor | Premium | Lower |
+|--------|---------|-------|
+| Strength | Clearly visible rainbow shimmer | Absent or barely perceptible |
+| Coverage | Across entire surface | Localised patches only |
+| Colour range | Multiple spectral colours | Single faint colour |
+| Nacre quality | Thick, well-ordered | Thin, irregular |
+
+### Pearl Types by Orient
+
+| Type | Orient Frequency | Notes |
+|------|-----------------|-------|
+| Akoya | Occasional | Best orient in saltwater cultured |
+| South Sea | Rare | Thick nacre but large platelet size |
+| Tahitian | Occasional | Dark body enhances visible orient |
+| Freshwater | Common in quality specimens | Solid nacre (no bead nucleus) |
+| Natural | Varies | Historically prized for orient |
+
 ## References
 
 - `references/phenomenal-gems-gallery.md` - Visual examples and quality standards
