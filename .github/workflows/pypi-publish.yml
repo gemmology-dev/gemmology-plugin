@@ -16,10 +16,10 @@ jobs:
       contents: write   # For uploading release assets
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5
         with:
           python-version: '3.11'
 
@@ -30,7 +30,7 @@ jobs:
         run: python -m build
 
       - name: Publish to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
+        uses: pypa/gh-action-pypi-publish@76f52bc884231f62b54f72e44af3571922400088 # release/v1
         # Uses trusted publishing - no token needed if configured
         # Fallback to token-based auth:
         # with:
