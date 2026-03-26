@@ -22,8 +22,5 @@
   "repository": "https://github.com/gemmology-dev/gemmology-plugin",
   "homepage": "https://gemmology.dev",
   "lspServers": "./.lsp.json",
-  "license": "MIT",
-  "commands": ["crystal-svg", "identify-gem"],
-  "agents": ["cdl-expert", "crystallography-expert", "documentation-expert", "gemmology-expert", "geometry-expert", "svg-rendering-expert", "test-expert", "twin-law-expert"],
-  "skills": ["chemical-properties", "crystal-visualization", "gem-care-durability", "gem-testing-instruments", "gemstone-species", "grading-valuation", "inclusions-fingerprints", "optical-properties", "origin-determination", "phenomenal-gems", "physical-properties", "synthetics-simulants", "treatments-enhancements"]
+  "license": "MIT"
 }
