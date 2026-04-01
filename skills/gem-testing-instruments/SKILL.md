@@ -302,3 +302,7 @@ See `optical-properties` skill for detailed fluorescence guide.
 - `references/testing-procedures.md` - Step-by-step protocols
 - `references/refractometer-readings.md` - Complete RI reference
 - `references/spectroscope-patterns.md` - Absorption spectra guide
+
+## Formal Reports
+
+For formal gemstone identification certificates, grading reports, or lab certificates, use the `reportcraft` plugin: `/report gem-id`, `/report gem-grading`, or `/report lab-certificate`.
